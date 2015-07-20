@@ -23,6 +23,9 @@ namespace VeinComponent
 
 namespace VeinStorage
 {
+  /**
+   * @brief A QHash based StorageSystem
+   */
   class VEINHASHSHARED_EXPORT VeinHash : public VeinEvent::StorageSystem
   {
   public:
@@ -46,9 +49,25 @@ namespace VeinStorage
     bool hasEntity(int t_entityId) const override;
 
   private:
+    /**
+     * @brief handles ADD, REMOVE and SET for ComponentData events
+     * @param t_cData
+     * @return
+     */
     bool processComponentData(VeinComponent::ComponentData *t_cData);
+
+    /**
+     * @brief handles ADD and REMOVE for EntityData events
+     * @param t_eData
+     * @return
+     */
     bool processEntityEvent(VeinComponent::EntityData *t_eData);
 
+    /**
+     * @brief sends ErrorEvents with the EventDate that caused the error
+     * @param t_errorString
+     * @param t_data
+     */
     void sendError(const QString t_errorString, VeinEvent::EventData *t_data);
 
     ComponentStorage<int> *m_data = new ComponentStorage<int>();
