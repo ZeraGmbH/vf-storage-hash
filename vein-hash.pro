@@ -9,6 +9,10 @@ TEMPLATE = lib
 VEIN_DEP_EVENT = 1
 VEIN_DEP_COMP = 1
 
+HEADERS +=\
+    vein-hash_global.h \
+    vs_veinhash.h
+
 exists( ../../project-paths.pri ) {
   include(../../project-paths.pri)
 }
@@ -21,10 +25,6 @@ DEFINES += VEINHASH_LIBRARY
 
 SOURCES += \
     vs_veinhash.cpp
-
-HEADERS +=\
-        vein-hash_global.h \
-    vs_veinhash.h
 
 unix {
     target.path = /usr/lib
