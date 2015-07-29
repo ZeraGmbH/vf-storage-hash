@@ -28,6 +28,9 @@ namespace VeinStorage
    */
   class VEINHASHSHARED_EXPORT VeinHash : public VeinEvent::StorageSystem
   {
+    Q_OBJECT
+    Q_DISABLE_COPY(VeinHash)
+
   public:
     explicit VeinHash(QObject *t_parent=0);
 
