@@ -129,6 +129,11 @@ namespace VeinStorage
     return m_data->contains(t_entityId);
   }
 
+  QList<int> VeinHash::getEntityList() const
+  {
+    return m_data->keys();
+  }
+
   bool VeinHash::processComponentData(ComponentData *t_cData)
   {
     bool retVal=false;

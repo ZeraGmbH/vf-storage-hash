@@ -49,6 +49,7 @@ namespace VeinStorage
 
     const QHash<QString, QVariant> *getEntityDataCopy(int t_entityId) const override;
     bool hasEntity(int t_entityId) const override;
+    QList<int> getEntityList() const override;
 
   private:
     /**
