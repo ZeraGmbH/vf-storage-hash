@@ -18,12 +18,12 @@ namespace VeinStorage
   VeinHash::VeinHash(QObject *t_parent) :
     StorageSystem(t_parent)
   {
-    qCDebug(VEIN_STORAGE_HASH) << "Created VeinHash storage";
+    vCDebug(VEIN_STORAGE_HASH) << "Created VeinHash storage";
   }
 
   VeinHash::~VeinHash()
   {
-    qCDebug(VEIN_STORAGE_HASH) << "Destroyed VeinHash storage";
+    vCDebug(VEIN_STORAGE_HASH) << "Destroyed VeinHash storage";
     for(int i=0; i<m_data->count(); ++i)
     {
       QHash<QString, QVariant> *tmpToDelete = m_data->values().at(i);
@@ -50,7 +50,7 @@ namespace VeinStorage
           {
             ComponentData *cData=0;
             cData = static_cast<ComponentData *>(cEvent->eventData());
-            qCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing component data from event" << cEvent;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing component data from event" << cEvent;
             retVal = processComponentData(cData);
             break;
           }
@@ -58,7 +58,7 @@ namespace VeinStorage
           {
             EntityData *eData=0;
             eData = static_cast<EntityData *>(cEvent->eventData());
-            qCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing entity data from event" << cEvent;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing entity data from event" << cEvent;
             retVal = processEntityEvent(eData);
             break;
           }
@@ -156,7 +156,7 @@ namespace VeinStorage
         }
         else
         {
-          qCDebug(VEIN_STORAGE_HASH) << "adding component:" << t_cData->entityId() << componentName << "with value:" << t_cData->newValue();
+          vCDebug(VEIN_STORAGE_HASH) << "adding component:" << t_cData->entityId() << componentName << "with value:" << t_cData->newValue();
           m_data->value(t_cData->entityId())->insert(componentName,t_cData->newValue());
           retVal = true;
         }
@@ -165,7 +165,7 @@ namespace VeinStorage
 
       case ComponentData::Command::CCMD_REMOVE:
       {
-        qCDebug(VEIN_STORAGE_HASH) << "removing key:" << componentName;
+        vCDebug(VEIN_STORAGE_HASH) << "removing key:" << componentName;
         m_data->value(t_cData->entityId())->remove(componentName);
         retVal = true;
         break;
@@ -187,7 +187,7 @@ namespace VeinStorage
         }
         else
         {
-          qCDebug(VEIN_STORAGE_HASH_VERBOSE) << "setting key:" << componentName << "from:" << m_data->value(t_cData->entityId())->value(componentName) << "to:" << t_cData->newValue();
+          vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "setting key:" << componentName << "from:" << m_data->value(t_cData->entityId())->value(componentName) << "to:" << t_cData->newValue();
           m_data->value(t_cData->entityId())->insert(componentName,t_cData->newValue());
           retVal = true;
         }

@@ -2,6 +2,7 @@
 #define VEINHASH_GLOBAL_H
 
 #include <QtCore/qglobal.h>
+#include "vh_logging.h"
 
 #if defined(VEINHASH_LIBRARY)
 #  define VEINHASHSHARED_EXPORT Q_DECL_EXPORT

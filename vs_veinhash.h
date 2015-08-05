@@ -35,10 +35,11 @@ namespace VeinStorage
 
     ~VeinHash();
 
-    // stands for QHash<"entity descriptor", QHash<"component name", "component data">*>
+    //stands for QHash<"entity descriptor", QHash<"component name", "component data">*>
     template <typename T>
     using ComponentStorage = QHash<T, QHash<QString, QVariant>*>;
 
+    //VeinEvent::StorageSystem interface
   public:
     bool processEvent(QEvent *t_event) override;
     StorageType getStorageType() const override;
