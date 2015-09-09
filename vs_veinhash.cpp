@@ -119,9 +119,9 @@ namespace VeinStorage
     return false;
   }
 
-  const QHash<QString, QVariant> *VeinHash::getEntityDataCopy(int t_entityId) const
+  QList<QString> VeinHash::getEntityComponents(int t_entityId) const
   {
-    return m_data->value(t_entityId);
+    return m_data->value(t_entityId)->keys();
   }
 
   bool VeinHash::hasEntity(int t_entityId) const

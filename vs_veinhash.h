@@ -47,8 +47,7 @@ namespace VeinStorage
     Q_INVOKABLE QVariant getStoredValue(int t_entityId, const QString &t_componentName) const override;
     Q_INVOKABLE bool hasStoredValue(int t_entityId, const QString &t_componentName) const override;
     bool initializeData(const QUrl &t_sourceUrl) override;
-
-    const QHash<QString, QVariant> *getEntityDataCopy(int t_entityId) const override;
+    QList<QString> getEntityComponents(int t_entityId) const override;
     bool hasEntity(int t_entityId) const override;
     QList<int> getEntityList() const override;
 
