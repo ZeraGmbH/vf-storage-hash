@@ -24,6 +24,7 @@ namespace VeinStorage
   VeinHash::~VeinHash()
   {
     vCDebug(VEIN_STORAGE_HASH) << "Destroyed VeinHash storage";
+
     for(int i=0; i<m_data->count(); ++i)
     {
       QHash<QString, QVariant> *tmpToDelete = m_data->values().at(i);
@@ -246,7 +247,7 @@ namespace VeinStorage
     return retVal;
   }
 
-  void VeinHash::sendError(const QString t_errorString, EventData *t_data)
+  void VeinHash::sendError(const QString &t_errorString, EventData *t_data)
   {
     ErrorData *errData = new ErrorData();
 

@@ -71,7 +71,7 @@ namespace VeinStorage
      * @param t_errorString
      * @param t_data
      */
-    void sendError(const QString t_errorString, VeinEvent::EventData *t_data);
+    void sendError(const QString &t_errorString, VeinEvent::EventData *t_data);
 
     ComponentStorage<int> *m_data = new ComponentStorage<int>();
   };
