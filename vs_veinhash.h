@@ -21,10 +21,13 @@ namespace VeinComponent
 }
 
 
+/**
+ * @brief Namespace for Vein Framework storage implementations
+ */
 namespace VeinStorage
 {
   /**
-   * @brief A QHash based StorageSystem
+   * @brief A QHash based VeinEvent::StorageSystem implementation
    */
   class VEINHASHSHARED_EXPORT VeinHash : public VeinEvent::StorageSystem
   {
