@@ -42,8 +42,9 @@ namespace VeinStorage
     {
       CommandEvent *cEvent = 0;
       cEvent = static_cast<CommandEvent *>(t_event);
+      Q_ASSERT(cEvent != 0);
 
-      if(cEvent != 0 && cEvent->eventSubtype() == CommandEvent::EventSubtype::NOTIFICATION)
+      if(cEvent->eventSubtype() == CommandEvent::EventSubtype::NOTIFICATION)
       {
         switch (cEvent->eventData()->type())
         {
@@ -51,6 +52,8 @@ namespace VeinStorage
           {
             ComponentData *cData=0;
             cData = static_cast<ComponentData *>(cEvent->eventData());
+            Q_ASSERT(cData != 0);
+
             vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing component data from event" << cEvent;
             retVal = processComponentData(cData);
             break;
@@ -59,6 +62,8 @@ namespace VeinStorage
           {
             EntityData *eData=0;
             eData = static_cast<EntityData *>(cEvent->eventData());
+            Q_ASSERT(eData != 0);
+
             vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing entity data from event" << cEvent;
             retVal = processEntityEvent(eData);
             break;
@@ -83,6 +88,7 @@ namespace VeinStorage
     Q_UNUSED(t_fileDevice)
     Q_UNUSED(t_overwrite)
     qCWarning(VEIN_STORAGE_HASH) << "Function dumpToFile is currently not implemented";
+    Q_ASSERT(false);
   }
 
 
@@ -117,6 +123,7 @@ namespace VeinStorage
   {
     Q_UNUSED(t_sourceUrl)
     qCWarning(VEIN_STORAGE_HASH) << "Function initializeData is currently not implemented";
+    Q_ASSERT(false);
     return false;
   }
 
@@ -137,6 +144,8 @@ namespace VeinStorage
 
   bool VeinHash::processComponentData(ComponentData *t_cData)
   {
+    Q_ASSERT(t_cData != 0);
+
     bool retVal=false;
     QString  componentName= t_cData->componentName();
     switch(t_cData->eventCommand())
@@ -203,6 +212,8 @@ namespace VeinStorage
 
   bool VeinHash::processEntityEvent(EntityData *t_eData)
   {
+    Q_ASSERT(t_eData != 0);
+
     bool retVal =false;
     switch(t_eData->eventCommand())
     {
@@ -249,6 +260,8 @@ namespace VeinStorage
 
   void VeinHash::sendError(const QString &t_errorString, EventData *t_data)
   {
+    Q_ASSERT(t_data != 0);
+
     ErrorData *errData = new ErrorData();
 
     errData->setEntityId(t_data->entityId());
