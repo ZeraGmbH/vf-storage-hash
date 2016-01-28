@@ -54,8 +54,16 @@ namespace VeinStorage
             cData = static_cast<ComponentData *>(cEvent->eventData());
             Q_ASSERT(cData != 0);
 
-            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing component data from event" << cEvent;
-            retVal = processComponentData(cData);
+            if(Q_UNLIKELY(cData->newValue().isValid() == false && cData->eventCommand() == ComponentData::Command::CCMD_SET))
+            {
+              vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Dropping event (command = CCMD_SET) with invalid event data:\nComponent name:" << cData->componentName() << "Value:" << cData->newValue();
+              t_event->accept();
+            }
+            else
+            {
+              vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing component data from event" << cEvent;
+              retVal = processComponentData(cData);
+            }
             break;
           }
           case EntityData::dataType():
