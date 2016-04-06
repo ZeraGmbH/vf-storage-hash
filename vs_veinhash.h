@@ -20,7 +20,6 @@ namespace VeinComponent
   class EntityData;
 }
 
-
 /**
  * @brief Namespace for Vein Framework storage implementations
  */
@@ -46,7 +45,7 @@ namespace VeinStorage
   public:
     bool processEvent(QEvent *t_event) override;
     StorageType getStorageType() const override;
-    void dumpToFile(QIODevice *t_fileDevice, bool t_overwrite) const  override;
+    void dumpToFile(QFile *t_fileDevice, bool t_overwrite) const  override;
     Q_INVOKABLE QVariant getStoredValue(int t_entityId, const QString &t_componentName) const override;
     Q_INVOKABLE bool hasStoredValue(int t_entityId, const QString &t_componentName) const override;
     bool initializeData(const QUrl &t_sourceUrl) override;
