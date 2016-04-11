@@ -211,14 +211,7 @@ namespace VeinStorage
 
   bool VeinHash::hasStoredValue(int t_entityId, const QString &t_componentName) const
   {
-    if(m_data->contains(t_entityId))
-    {
-      return m_data->value(t_entityId)->contains(t_componentName);
-    }
-    else
-    {
-      return false;
-    }
+    return m_data->contains(t_entityId) && m_data->value(t_entityId)->contains(t_componentName);
   }
 
 
