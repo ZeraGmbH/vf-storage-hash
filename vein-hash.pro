@@ -14,6 +14,8 @@ HEADERS +=\
     vein-hash_global.h \
     vs_veinhash.h
 
+public_headers.files = $$HEADERS
+
 exists( ../../vein-framework.pri ) {
   include(../../vein-framework.pri)
 }
