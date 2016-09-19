@@ -11,6 +11,8 @@
 #include <QJsonArray>
 #include <QFile>
 
+#include <QElapsedTimer>
+
 Q_LOGGING_CATEGORY(VEIN_STORAGE_HASH, "\033[1;36m<Vein.Storage.Hash>\033[0m")
 Q_LOGGING_CATEGORY(VEIN_STORAGE_HASH_VERBOSE, "\033[0;36m<Vein.Storage.Hash>\033[0m")
 
@@ -101,10 +103,12 @@ namespace VeinStorage
 
   void VeinHash::dumpToFile(QFile *t_fileDevice, bool t_overwrite) const
   {
+    QElapsedTimer qET;
+    qET.start();
     //debug
     Q_ASSERT(t_fileDevice->exists() == false || t_overwrite);
     if((t_fileDevice->exists() == false || t_overwrite) &&
-       (t_fileDevice->isOpen() || t_fileDevice->open(QFile::WriteOnly)) &&
+       ((t_fileDevice->isOpen() || t_fileDevice->open(QFile::WriteOnly))) &&
        t_fileDevice->isWritable())
     {
 
@@ -122,7 +126,7 @@ namespace VeinStorage
           QJsonValue toInsert;
           int tmpDataType = QMetaType::type(tmpData.typeName());
 
-          qDebug() << tmpData.typeName() << tmpDataType << QMetaType::type("QList<QString>") << QMetaType::type(tmpData.typeName());
+          vCDebug(VEIN_STORAGE_HASH_VERBOSE) << tmpData.typeName() << tmpDataType << QMetaType::type("QList<QString>") << QMetaType::type(tmpData.typeName());
 
           if(tmpDataType == QMetaType::type("QList<int>")) //needs manual conversion
           {
@@ -133,7 +137,7 @@ namespace VeinStorage
               tmpIntList.append(tmpInt);
             }
             toInsert = QJsonArray::fromVariantList(tmpIntList);
-            qDebug() << "inserted QJsonArray from QList<Int>" << tmpComponentName << tmpIntList;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonArray from QList<Int>" << tmpComponentName << tmpIntList;
           }
           else if(tmpDataType == QMetaType::type("QList<double>")) //needs manual conversion
           {
@@ -144,7 +148,7 @@ namespace VeinStorage
               tmpDoubleList.append(tmpDouble);
             }
             toInsert = QJsonArray::fromVariantList(tmpDoubleList);
-            qDebug() << "inserted QJsonArray from QList<double>" << tmpComponentName << tmpDoubleList;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonArray from QList<double>" << tmpComponentName << tmpDoubleList;
           }
           else if(tmpDataType == QMetaType::QStringList) //needs manual conversion
           {
@@ -155,28 +159,28 @@ namespace VeinStorage
               tmpStringList.append(tmpString);
             }
             toInsert = QJsonArray::fromVariantList(tmpStringList);
-            qDebug() << "inserted QJsonArray from QList<QString>" << tmpComponentName << tmpStringList << stringList;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonArray from QList<QString>" << tmpComponentName << tmpStringList << stringList;
           }
           else if(tmpData.canConvert(QMetaType::QVariantList) && tmpData.toList().isEmpty() == false)
           {
-            toInsert =QJsonArray::fromVariantList(tmpData.toList());
-            qDebug() << "inserted QJsonArray" << tmpComponentName << tmpData.toList();
+            toInsert = QJsonArray::fromVariantList(tmpData.toList());
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonArray" << tmpComponentName << tmpData.toList();
           }
           else if(tmpData.canConvert(QMetaType::QVariantMap) && tmpData.toMap().isEmpty() == false)
           {
             toInsert = QJsonObject::fromVariantMap(tmpData.toMap());
-            qDebug() << "inserted QJsonObject" << tmpComponentName << tmpData.toMap();
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonObject" << tmpComponentName << tmpData.toMap();
           }
           else
           {
             toInsert = QJsonValue::fromVariant(tmpData);
-            qDebug() << "inserted QJsonValue" << tmpComponentName << QJsonValue::fromVariant(tmpData) << tmpData;
+            vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonValue" << tmpComponentName << QJsonValue::fromVariant(tmpData) << tmpData;
           }
 
           if(toInsert.isNull()) //how to consistently store and retrieve a QVector2D or QDateTime in JSON?
           {
             //VF_ASSERT(toInsert.isNull() == false, QString("Datatype %1 is not supported").arg(tmpData.typeName()).toStdString().c_str());
-            qWarning() << "Datatype" << tmpData.typeName() << "from" << tmpEntityId << tmpComponentName << "is not supported by function " << __PRETTY_FUNCTION__;
+            qCWarning(VEIN_STORAGE_HASH) << "Datatype" << tmpData.typeName() << "from" << tmpEntityId << tmpComponentName << "is not supported by function " << __PRETTY_FUNCTION__;
           }
 
           tmpEntityObject.insert(tmpComponentName, toInsert);
@@ -192,6 +196,8 @@ namespace VeinStorage
     {
       t_fileDevice->close();
     }
+
+    vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Dump finished in" << qET.nsecsElapsed() << "nSecs" << qET.elapsed();
   }
 
 
@@ -262,7 +268,7 @@ namespace VeinStorage
         }
         else
         {
-          vCDebug(VEIN_STORAGE_HASH) << "adding component:" << t_cData->entityId() << componentName << "with value:" << t_cData->newValue();
+          vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "adding component:" << t_cData->entityId() << componentName << "with value:" << t_cData->newValue();
           m_data->value(t_cData->entityId())->insert(componentName,t_cData->newValue());
           retVal = true;
         }
