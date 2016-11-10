@@ -108,7 +108,7 @@ namespace VeinStorage
     //debug
     Q_ASSERT(t_fileDevice->exists() == false || t_overwrite);
     if((t_fileDevice->exists() == false || t_overwrite) &&
-       ((t_fileDevice->isOpen() || t_fileDevice->open(QFile::WriteOnly))) &&
+       (t_fileDevice->isOpen() || t_fileDevice->open(QFile::WriteOnly)) &&
        t_fileDevice->isWritable())
     {
 
