@@ -115,12 +115,15 @@ namespace VeinStorage
       QJsonDocument tmpDoc;
       QJsonObject rootObject;
 
-      foreach (int tmpEntityId, m_data->keys())
+      const auto tmpEntityIdKeys = m_data->keys();
+
+      for(const int tmpEntityId : tmpEntityIdKeys)
       {
         auto entityHashPointer = m_data->value(tmpEntityId);
         QJsonObject tmpEntityObject;
+        const auto tmpEntityComponentNames = m_data->value(tmpEntityId)->keys();
 
-        foreach (QString tmpComponentName, m_data->value(tmpEntityId)->keys())
+        for(const QString &tmpComponentName : tmpEntityComponentNames)
         {
           QVariant tmpData = entityHashPointer->value(tmpComponentName);
           QJsonValue toInsert;
@@ -131,8 +134,8 @@ namespace VeinStorage
           if(tmpDataType == QMetaType::type("QList<int>")) //needs manual conversion
           {
             QVariantList tmpIntList;
-            auto intList = tmpData.value<QList<int> >();
-            foreach (int tmpInt, intList)
+            const auto intList = tmpData.value<QList<int> >();
+            for(const int &tmpInt : intList)
             {
               tmpIntList.append(tmpInt);
             }
@@ -142,8 +145,8 @@ namespace VeinStorage
           else if(tmpDataType == QMetaType::type("QList<double>")) //needs manual conversion
           {
             QVariantList tmpDoubleList;
-            auto doubleList = tmpData.value<QList<double> >();
-            foreach (double tmpDouble, doubleList)
+            const auto doubleList = tmpData.value<QList<double> >();
+            for(const double tmpDouble : doubleList)
             {
               tmpDoubleList.append(tmpDouble);
             }
@@ -153,8 +156,8 @@ namespace VeinStorage
           else if(tmpDataType == QMetaType::QStringList) //needs manual conversion
           {
             QVariantList tmpStringList;
-            auto stringList = tmpData.value<QStringList>();
-            foreach (QString tmpString, stringList)
+            const auto stringList = tmpData.value<QStringList>();
+            for(const QString &tmpString : stringList)
             {
               tmpStringList.append(tmpString);
             }
