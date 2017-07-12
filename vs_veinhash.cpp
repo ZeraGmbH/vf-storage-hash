@@ -67,7 +67,7 @@ namespace VeinStorage
 
             if(Q_UNLIKELY(cData->newValue().isValid() == false && cData->eventCommand() == ComponentData::Command::CCMD_SET))
             {
-              vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Dropping event (command = CCMD_SET) with invalid event data:\nComponent name:" << cData->componentName() << "Value:" << cData->newValue();
+              vCDebug(VEIN_STORAGE_HASH) << "Dropping event (command = CCMD_SET) with invalid event data:\nComponent name:" << cData->componentName() << "Value:" << cData->newValue();
               t_event->accept();
             }
             else
@@ -119,7 +119,7 @@ namespace VeinStorage
 
       for(const int tmpEntityId : tmpEntityIdKeys)
       {
-        auto entityHashPointer = m_data->value(tmpEntityId);
+        const auto entityHashPointer = m_data->value(tmpEntityId);
         QJsonObject tmpEntityObject;
         const auto tmpEntityComponentNames = m_data->value(tmpEntityId)->keys();
 
@@ -280,7 +280,7 @@ namespace VeinStorage
 
       case ComponentData::Command::CCMD_REMOVE:
       {
-        vCDebug(VEIN_STORAGE_HASH) << "removing key:" << componentName;
+        vCDebug(VEIN_STORAGE_HASH) << "removing entry:" << t_cData->entityId() << componentName;
         m_data->value(t_cData->entityId())->remove(componentName);
         retVal = true;
         break;
