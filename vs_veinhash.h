@@ -4,6 +4,7 @@
 #include "vein-hash_global.h"
 
 #include <ve_storagesystem.h>
+#include <ve_eventdata.h>
 #include <QHash>
 
 Q_DECLARE_LOGGING_CATEGORY(VEIN_STORAGE_HASH)
@@ -34,6 +35,8 @@ namespace VeinStorage
 
   public:
     explicit VeinHash(QObject *t_parent=0);
+    void setAcceptableOrigin(QList<VeinEvent::EventData::EventOrigin> t_origins);
+    const QList<VeinEvent::EventData::EventOrigin> &getAcceptableOrigin() const;
 
     ~VeinHash();
 
@@ -52,7 +55,6 @@ namespace VeinStorage
     QList<QString> getEntityComponents(int t_entityId) const override;
     bool hasEntity(int t_entityId) const override;
     QList<int> getEntityList() const override;
-
   private:
     /**
      * @brief handles ADD, REMOVE and SET for ComponentData events
@@ -76,6 +78,7 @@ namespace VeinStorage
     void sendError(const QString &t_errorString, VeinEvent::EventData *t_data);
 
     ComponentStorage<int> *m_data = new ComponentStorage<int>();
+    QList<VeinEvent::EventData::EventOrigin> m_acceptableOrigins = {VeinEvent::EventData::EventOrigin::EO_LOCAL, VeinEvent::EventData::EventOrigin::EO_FOREIGN};
   };
 }
 

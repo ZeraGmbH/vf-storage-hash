@@ -28,6 +28,16 @@ namespace VeinStorage
     vCDebug(VEIN_STORAGE_HASH) << "Created VeinHash storage";
   }
 
+  void VeinHash::setAcceptableOrigin(QList<EventData::EventOrigin> t_origins)
+  {
+    m_acceptableOrigins = t_origins;
+  }
+
+  const QList<EventData::EventOrigin> &VeinHash::getAcceptableOrigin() const
+  {
+    return m_acceptableOrigins;
+  }
+
   VeinHash::~VeinHash()
   {
     vCDebug(VEIN_STORAGE_HASH) << "Destroyed VeinHash storage";
@@ -55,7 +65,7 @@ namespace VeinStorage
       evData = cEvent->eventData();
       Q_ASSERT(evData != 0);
 
-      if(cEvent->eventSubtype() == CommandEvent::EventSubtype::NOTIFICATION)
+      if(cEvent->eventSubtype() == CommandEvent::EventSubtype::NOTIFICATION && m_acceptableOrigins.contains(evData->eventOrigin()))
       {
         switch (evData->type())
         {
