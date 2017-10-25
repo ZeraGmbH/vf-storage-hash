@@ -199,7 +199,7 @@ namespace VeinStorage
           tmpEntityObject.insert(tmpComponentName, toInsert);
         }
         rootObject.insert(QString::number(tmpEntityId), tmpEntityObject);
-        //qDebug() << "inserted QJsonObject" << tmpEntityId;
+        //vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "inserted QJsonObject" << tmpEntityId;
       }
       tmpDoc.setObject(rootObject);
       t_fileDevice->write(tmpDoc.toJson());
