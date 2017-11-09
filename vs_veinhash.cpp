@@ -262,7 +262,7 @@ namespace VeinStorage
     Q_ASSERT(t_cData != 0);
 
     bool retVal=false;
-    QString  componentName= t_cData->componentName();
+    const QString componentName= t_cData->componentName();
     switch(t_cData->eventCommand())
     {
       case ComponentData::Command::CCMD_ADD:
@@ -290,12 +290,14 @@ namespace VeinStorage
 
       case ComponentData::Command::CCMD_REMOVE:
       {
-        vCDebug(VEIN_STORAGE_HASH) << "removing entry:" << t_cData->entityId() << componentName;
-        m_data->value(t_cData->entityId())->remove(componentName);
-        retVal = true;
+        if(m_data->contains(t_cData->entityId()) && m_data->value(t_cData->entityId())->contains(componentName))
+        {
+          vCDebug(VEIN_STORAGE_HASH) << "removing entry:" << t_cData->entityId() << componentName;
+          m_data->value(t_cData->entityId())->remove(componentName);
+          retVal = true;
+        }
         break;
       }
-
       case ComponentData::Command::CCMD_SET:
       {
         if(m_data->contains(t_cData->entityId()) == false)
@@ -318,7 +320,14 @@ namespace VeinStorage
         }
         break;
       }
-
+      case ComponentData::Command::CCMD_FETCH:
+      {
+        vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing CCMD_FETCH, entityId:" << t_cData->entityId() << "componentName:" << componentName;
+        t_cData->setNewValue(getStoredValue(t_cData->entityId(), componentName));
+        t_cData->setEventOrigin(ComponentData::EventOrigin::EO_LOCAL);
+        t_cData->setEventTarget(ComponentData::EventTarget::ET_ALL);
+        retVal = true;
+      }
       default:
         break;
     }
@@ -332,7 +341,7 @@ namespace VeinStorage
     bool retVal =false;
     switch(t_eData->eventCommand())
     {
-      case VeinComponent::EntityData::ECMD_ADD:
+      case EntityData::Command::ECMD_ADD:
       {
         if(m_data->contains(t_eData->entityId()) == false)
         {
@@ -349,7 +358,7 @@ namespace VeinStorage
         break;
       }
 
-      case VeinComponent::EntityData::ECMD_REMOVE:
+      case EntityData::Command::ECMD_REMOVE:
       {
         if(m_data->contains(t_eData->entityId()) == true)
         {
