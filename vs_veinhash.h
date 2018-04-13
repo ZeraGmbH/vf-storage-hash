@@ -35,7 +35,7 @@ namespace VeinStorage
     Q_OBJECT
 
   public:
-    explicit VeinHash(QObject *t_parent=0);
+    explicit VeinHash(QObject *t_parent=nullptr);
     void setAcceptableOrigin(QList<VeinEvent::EventData::EventOrigin> t_origins);
     const QList<VeinEvent::EventData::EventOrigin> &getAcceptableOrigin() const;
 
