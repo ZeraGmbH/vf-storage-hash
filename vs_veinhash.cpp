@@ -94,7 +94,7 @@ namespace VeinStorage
             Q_ASSERT(eData != nullptr);
 
             vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing entity data from event" << cEvent;
-            retVal = processEntityEvent(eData);
+            retVal = processEntityData(eData);
             break;
           }
           default:
@@ -334,7 +334,7 @@ namespace VeinStorage
     return retVal;
   }
 
-  bool VeinHash::processEntityEvent(EntityData *t_eData)
+  bool VeinHash::processEntityData(EntityData *t_eData)
   {
     Q_ASSERT(t_eData != nullptr);
 

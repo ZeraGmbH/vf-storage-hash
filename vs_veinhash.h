@@ -39,7 +39,7 @@ namespace VeinStorage
     void setAcceptableOrigin(QList<VeinEvent::EventData::EventOrigin> t_origins);
     const QList<VeinEvent::EventData::EventOrigin> &getAcceptableOrigin() const;
 
-    ~VeinHash();
+    virtual ~VeinHash() override;
 
     //stands for QHash<"entity descriptor", QHash<"component name", "component data">*>
     template <typename T>
@@ -69,7 +69,7 @@ namespace VeinStorage
      * @param t_eData
      * @return
      */
-    bool processEntityEvent(VeinComponent::EntityData *t_eData);
+    bool processEntityData(VeinComponent::EntityData *t_eData);
 
     /**
      * @brief sends ErrorEvents with the EventDate that caused the error
