@@ -322,6 +322,7 @@ namespace VeinStorage
       }
       case ComponentData::Command::CCMD_FETCH:
       {
+        ///@todo @bug remove inconsistent behavior by sending a new event instead of rewriting the current event
         vCDebug(VEIN_STORAGE_HASH_VERBOSE) << "Processing CCMD_FETCH, entityId:" << t_cData->entityId() << "componentName:" << componentName;
         t_cData->setNewValue(getStoredValue(t_cData->entityId(), componentName));
         t_cData->setEventOrigin(ComponentData::EventOrigin::EO_LOCAL);
