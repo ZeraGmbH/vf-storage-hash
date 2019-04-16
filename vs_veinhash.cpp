@@ -328,6 +328,7 @@ namespace VeinStorage
         t_cData->setEventOrigin(ComponentData::EventOrigin::EO_LOCAL);
         t_cData->setEventTarget(ComponentData::EventTarget::ET_ALL);
         retVal = true;
+        break;
       }
       default:
         break;
