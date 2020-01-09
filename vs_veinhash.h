@@ -1,7 +1,7 @@
 #ifndef VEINHASH_H
 #define VEINHASH_H
 
-#include "vein-hash_global.h"
+#include "globalIncludes.h"
 
 #include <ve_storagesystem.h>
 #include <ve_eventdata.h>
@@ -30,7 +30,7 @@ namespace VeinStorage
   /**
    * @brief A QHash based VeinEvent::StorageSystem implementation
    */
-  class VEINHASHSHARED_EXPORT VeinHash : public VeinEvent::StorageSystem
+  class VFSTORAGEHASH_EXPORT VeinHash : public VeinEvent::StorageSystem
   {
     Q_OBJECT
 
